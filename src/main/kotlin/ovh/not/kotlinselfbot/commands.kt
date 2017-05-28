@@ -1,12 +1,9 @@
 package ovh.not.kotlinselfbot
 
-import net.dv8tion.jda.core.entities.Channel
 import net.dv8tion.jda.core.entities.ChannelType
 import net.dv8tion.jda.core.entities.Message
-import net.dv8tion.jda.core.entities.TextChannel
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent
 import java.io.File
-import java.util.concurrent.Future
 import javax.script.Invocable
 import javax.script.ScriptEngineManager
 
