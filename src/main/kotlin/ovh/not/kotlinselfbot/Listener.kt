@@ -29,6 +29,7 @@ class Listener: ListenerAdapter() {
         if (event.author.idLong != event.jda.selfUser.idLong) {
             return
         }
+        println(content)
         if (content == "self.reload") {
             commandManager.commands.clear()
             commandManager.load()
