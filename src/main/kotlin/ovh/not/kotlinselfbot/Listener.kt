@@ -58,7 +58,7 @@ class Listener: ListenerAdapter() {
             args = ArrayList()
         }
         val ctx = Context(event, args, command, commandManager)
-        command.invokable.invokeFunction("execute", ctx)
+        command.invoke(ctx)
     }
 
     override fun onCallCreate(event: CallCreateEvent?) {

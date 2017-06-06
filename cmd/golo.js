@@ -7,7 +7,7 @@ String = Java.type("java.lang.String");
 File = Java.type("java.io.File");
 
 function sendLongMsg(ctx, msg) {
-    if (msg == null || msg.length == 0 || msg.equals("ERR:")) {
+    if (msg === null || msg.length === 0 || msg.equals("ERR:")) {
         return;
     }
     if (msg.length <= 1990) {

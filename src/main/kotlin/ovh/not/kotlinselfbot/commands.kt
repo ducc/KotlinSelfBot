@@ -3,13 +3,38 @@ package ovh.not.kotlinselfbot
 import net.dv8tion.jda.core.entities.ChannelType
 import net.dv8tion.jda.core.entities.Message
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent
+import org.eclipse.golo.compiler.GoloClassLoader
 import java.io.File
+import java.io.FileInputStream
+import java.lang.invoke.MethodHandles
+import java.lang.invoke.MethodType
+import java.lang.reflect.Method
 import javax.script.Invocable
 import javax.script.ScriptEngineManager
 
-class Command(val file: File, val name: String, val content: String, val invokable: Invocable)
+abstract class Command(val file: File, val content: String) {
+    abstract fun invoke(ctx: Context)
+}
+
+class NashornCommand(file: File, content: String, val invocable: Invocable): Command(file, content) {
+    override fun invoke(ctx: Context) {
+        invocable.invokeFunction("main", ctx)
+    }
+}
+
+class GoloCommand(file: File, content: String, val method: Method): Command(file, content) {
+    override fun invoke(ctx: Context) {
+        try {
+            method.invoke(null, ctx)
+        } catch (e: Exception) {
+            ctx.msg(e.message!!)
+            e.printStackTrace()
+        }
+    }
+}
 
 class CommandManager {
+    val lookup = MethodHandles.lookup()
     val commands = HashMap<String, Command>()
 
     init {
@@ -34,13 +59,30 @@ class CommandManager {
         }
         val files = getFiles(dir)
         val engineManager = ScriptEngineManager()
+        val goloClassLoader = GoloClassLoader()
         files.forEach {
             val content = it.readText()
-            val engine = engineManager.getEngineByName("nashorn")
-            engine.eval(content)
-            val invokable = engine as Invocable
-            val command = Command(it, it.nameWithoutExtension, content, invokable)
-            commands[command.name.toLowerCase()] = command
+            if (it.extension == "js") {
+                val engine = engineManager.getEngineByName("nashorn")
+                engine.eval(content)
+                val invokable = engine as Invocable
+                val command = NashornCommand(it, content, invokable)
+                commands[it.nameWithoutExtension.toLowerCase()] = command
+            } else if (it.extension == "golo") {
+                val clazz = goloClassLoader.load(cmdsPath + "/" + it.name, FileInputStream(it))
+                var method: Method? = null
+                clazz.declaredMethods.forEach methods@ {
+                    if (it.name == "execute") {
+                        method = it
+                        return@methods
+                    }
+                }
+                if (method == null) {
+                    throw RuntimeException("error loading ${it.name}")
+                }
+                val command = GoloCommand(it, content, method!!)
+                commands[it.nameWithoutExtension.toLowerCase()] = command
+            }
         }
         return true
     }

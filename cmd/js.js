@@ -15,5 +15,6 @@ function execute(ctx) {
         ctx.msg(result);
     } catch (e) {
         ctx.msg(e.getMessage());
+        e.printStackTrace();
     }
 }
