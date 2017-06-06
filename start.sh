@@ -1,0 +1,1 @@
+java -jar target/dabbot-1.0-jar-with-dependencies.jar mfa.mg3ml8pnLpb4JJXTb1U7k4u6w_8MQkRRTJsL6RcvDsKWombZeVNgitzcazwX1-6IOeTSoqQUhwfSVlUYnShG 87164639695110144

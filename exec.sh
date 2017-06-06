@@ -1,0 +1,1 @@
+sudo salt '*' cmd.run 'ping -c 3 google.com'

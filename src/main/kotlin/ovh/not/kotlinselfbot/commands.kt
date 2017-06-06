@@ -18,7 +18,7 @@ abstract class Command(val file: File, val content: String) {
 
 class NashornCommand(file: File, content: String, val invocable: Invocable): Command(file, content) {
     override fun invoke(ctx: Context) {
-        invocable.invokeFunction("main", ctx)
+        invocable.invokeFunction("execute", ctx)
     }
 }
 
