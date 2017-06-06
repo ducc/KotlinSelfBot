@@ -22,7 +22,7 @@ function sendLongMsg(ctx, msg) {
     sendLongMsg(ctx, msg)
 }
 
-function execute(ctx) {
+function run(ctx) {
     runtime = Runtime.getRuntime();
     command = "module selfbot.Eval\n" + String.join(" ", ctx.getArgs());
     file = new File("exec.golo");

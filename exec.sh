@@ -1,1 +1,1 @@
-sudo salt '*' cmd.run 'ping -c 3 google.com'
+sudo salt 'quavo.dabbot.org' cmd.exec_code js 'console.log(1 << 31)'

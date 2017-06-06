@@ -6,7 +6,7 @@ System = Java.type("java.lang.System");
 String = Java.type("java.lang.String");
 File = Java.type("java.io.File");
 
-function execute(ctx) {
+function run(ctx) {
     runtime = Runtime.getRuntime();
     command = String.join(" ", ctx.getArgs());
     file = new File("exec.sh");

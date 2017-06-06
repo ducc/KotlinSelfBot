@@ -2,7 +2,7 @@ ScriptEngineManager = Java.type("javax.script.ScriptEngineManager");
 String = Java.type("java.lang.String");
 System = Java.type("java.lang.System");
 
-function execute(ctx) {
+function run(ctx) {
     engine = new ScriptEngineManager().getEngineByName("nashorn");
     engine.put("ctx", ctx);
     code = String.join(" ", ctx.getArgs());

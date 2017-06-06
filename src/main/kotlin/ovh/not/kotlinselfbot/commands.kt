@@ -18,7 +18,7 @@ abstract class Command(val file: File, val content: String) {
 
 class NashornCommand(file: File, content: String, val invocable: Invocable): Command(file, content) {
     override fun invoke(ctx: Context) {
-        invocable.invokeFunction("execute", ctx)
+        invocable.invokeFunction("run", ctx)
     }
 }
 
@@ -72,7 +72,7 @@ class CommandManager {
                 val clazz = goloClassLoader.load(cmdsPath + "/" + it.name, FileInputStream(it))
                 var method: Method? = null
                 clazz.declaredMethods.forEach methods@ {
-                    if (it.name == "execute") {
+                    if (it.name == "run") {
                         method = it
                         return@methods
                     }
