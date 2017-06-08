@@ -1,1 +1,0 @@
-sudo salt 'quavo.dabbot.org' cmd.exec_code js 'console.log(1 << 31)'
