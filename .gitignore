@@ -2,3 +2,4 @@
 target
 *.jar
 KotlinSelfBot.iml
+*.sh
