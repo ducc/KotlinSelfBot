@@ -19,9 +19,9 @@ function run(ctx) {
     IOUtils.copy(process.getInputStream(), writer, "UTF-8");
     response = writer.toString();
     while (response.length > 1990) {
-        msg = "```\n" + response.substring(0, 1990) + "\n```";
+        msg = "```\n" + response.substring(0, 1990).replace("`", "'") + "\n```";
         response = response.substring(1990);
-        ctx.msg(msg.replace("`", "'"));
+        ctx.msg(msg);
     }
     ctx.msg("```\n" + response.replace("`", "'") + "\n```");
 }
