@@ -21,7 +21,7 @@ function run(ctx) {
     while (response.length > 1990) {
         msg = "```\n" + response.substring(0, 1990) + "\n```";
         response = response.substring(1990);
-        ctx.msg(msg);
+        ctx.msg(msg.replace("`", "'"));
     }
-    ctx.msg("```\n" + response + "\n```");
+    ctx.msg("```\n" + response.replace("`", "'") + "\n```");
 }
